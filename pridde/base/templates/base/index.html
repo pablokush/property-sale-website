@@ -1,0 +1,315 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="We are a real estate firm focused on customer experience and quality service delivery. We provide an easy platform to buy, sell and advertise real estate. We focus on providing relative and strategic driven content to offer solutions to your real estate problems.">
+
+    <title>PRIDE MANSIONS: Find your perfect home</title>
+
+    <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'base/styles/style.css' %}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    {% include 'base/include/navbar.html' %}
+
+    <!-- header section ends -->
+
+    <!-- home section starts  -->
+    
+    <section class="home" id="home">
+      <div class="hero-text">
+        <h1>Sell, Rent and Advertise Real Estate Properties</h1>
+        <p>Find Your Perfect Home With Us</p>
+
+        <div class="">
+            <form action="{% url 'home' %}" method="GET" class="d-flex">
+                
+              <div class="row input-group">
+                <div class="col-8">
+               
+                  <select name="q" style="width: 100%; height: 100%; font-size: 20px ;" class="from-control">
+                    {% for item in location %}
+                    <option value="{{item.location}}" name="q">{{item.location}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-4" style="height: 100%;">
+                  <input type="submit" value="Search" id="search-btn" style="background-color: rgb(238, 162, 20); color: white; height: 100%; width: 100%; border-radius: 5px; font-size: 20px;" />
+                </div>
+              </div>
+            </form>
+            <div>
+                <p id="counter">{{count }}</p>
+            </div>
+          </div>
+      </div>
+
+     
+    </section>
+
+    <!-- home section ends -->
+     <!-- featured section starts  -->
+
+     <section class="featured" id="featured">
+        <h1 class="heading"><span>featured</span> properties</h1>
+  
+        <div class="box-container">
+          {% for item in properties %}
+          <div class="box">
+            <div class="image-container">
+              <img src="{{item.image.url}}" alt="" />
+              <div class="info">
+                <h3>for both sell & rent</h3>
+              </div>
+            </div>
+            <div class="content">
+              <div class="price">
+                <h3 id="amount">Ksh {{item.price|intcomma}}</h3>
+              </div>
+              <div class="location">
+                <h3>{{item.name}}</h3>
+                <p>{{ item.location}}</p>
+              </div>
+              <div class="details">
+                <h3>{{item.area}} sqft</h3>
+                <h3>{{item.bedroom}} bedrooms</h3>
+                <h3>{{item.bathrooms}} bathrooms</h3>
+              </div>
+              <div class="buttons">
+                <a
+                  href="mailto:{{item.owner.email}}?subject=Property%20Inquiry&body=I would like to enquire about {{item.description}}"
+                  class="btn"
+                  id="MybtnModal"
+                  ><p id="request">request info</p>
+                  <p></p
+                ></a>
+                <a href="{% url 'details' item.id %}" class="btn">view details</a>
+              </div>
+            </div>
+          </div>
+  
+          {% endfor %}
+        </div>
+      </section>
+
+    <!-- services section starts  -->
+
+    <section class="services" id="services">
+      <h1 class="heading">our <span>services</span></h1>
+      {% for item in details %}
+      <div class="box-container">
+        <div class="box">
+          <img src="images/s-1.png" alt="" />
+          <h3>leasing home</h3>
+
+          <p>{{item.leasingDescription}}</p>
+
+          
+        </div>
+
+        <div class="box">
+          <img src="images/s-2.png" alt="" />
+          <h3>selling home</h3>
+          <p>{{item.sellingDescription}}</p>
+          
+        </div>
+
+        <div class="box">
+          <img src="images/s-3.png" alt="" />
+          <h3>advertising real estate</h3>
+          <p>{{item.advertisingDescription}}</p>
+          
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+
+    <!-- services section ends -->
+
+   
+    <!-- dialog box for openning email client -->
+    <div class="modal" tabindex="-1" role="dialog" id="Mymodal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Please Wait</h5>
+          </div>
+          <div class="modal-body">
+            <p>Email Client Openning ..</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              id="close"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- featured section ends -->
+
+    <!-- agents section starts  -->
+   
+
+
+    <!-- agents section ends -->
+
+    <!-- contact section starts  -->
+
+    <section class="contact" id="contact">
+      <h1 class="heading"><span>contact</span> us</h1>
+
+      <div class="icons-container">
+        {% for item in details %}
+        <div class="icons">
+          <img src="images/icon-1.png" alt="" />
+          <h3>phone number</h3>
+          <p>{{item.phone1}}</p>
+          <p>{{item.phome2}}</p>
+        </div>
+
+        <div class="icons">
+          <img src="images/icon-2.png" alt="" />
+          <h3>email address</h3>
+          <p>{{item.email1}}</p>
+          <!-- <p>{{item.email2}}</p> -->
+        </div>
+
+        <div class="icons">
+          <img src="images/icon-3.png" alt="" />
+          <h3>Office address</h3>
+          <p style="text-transform: capitalize;">{{item.address}}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- contact section ends -->
+
+    <!-- footer section starts  -->
+
+    <section class="footer">
+      <div class="footer-container">
+        <div class="box-container">
+          <div class="box">
+            <h3>branch location</h3>
+            <a href="#">Kileleshwa</a>
+            <a href="#">Kilimani</a>
+            <a href="#">Karen</a>
+            <a href="#">Westlands</a>
+            <a href="#">River Side</a>
+          </div>
+
+          <div class="box">
+            <h3>quick links</h3>
+            <a href="#home">home</a>
+            <a href="#services">services</a>
+            <a href="#featured">featured</a>
+            <a href="#agents">agents</a>
+            <a href="#contact">contact</a>
+            <a href="{% url 'login-user' %}">Admin</a>
+          </div>
+
+          <div class="box">
+            <h3>extra links</h3>
+            <a href="#">my account</a>
+            <a href="#">my favorite</a>
+            <a href="#">my list</a>
+          </div>
+
+          <div class="box">
+            <h3>follow us</h3>
+            <a href="#">facebook</a>
+            <a href="#">twitter</a>
+            <a href="#">instagram</a>
+            <a href="#">linkedin</a>
+          </div>
+        </div>
+
+        <div class="credit">Copyright &copy; 2022 All rights reserved</div>
+      </div>
+    </section>
+
+    
+
+    <!-- footer section ends -->
+
+    <!-- javascript part  -->
+    <script>
+      $(document).ready(function () {
+
+        $(document).on('keydown', function(e) {
+        if(e.ctrlKey && (e.key == "p" || e.charCode == 16 || e.charCode == 112 || e.keyCode == 80) ){
+            alert("Sorry, you are not authorized to take a Print");
+            e.cancelBubble = true;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        }
+    });
+
+        $("#MybtnModal").click(function () {
+          $("#request").replaceWith("Opening in  Email .....");
+        });
+
+        $("#search-btn").click(function () {
+          $("#counter").replaceWith("<p>hello ${{counter}}</p>");
+        });
+      });
+
+      let menu = document.querySelector("#menu-bars");
+      let navbar = document.querySelector(".navbar");
+
+      menu.onclick = () => {
+        navbar.classList.toggle("active");
+        menu.classList.toggle("fa-times");
+      };
+
+      window.onscroll = () => {
+        navbar.classList.remove("active");
+        menu.classList.remove("fa-times");
+      };
+    </script>
+    <script src="{% static 'base/scripts/index.js' %}"></script>
+  </body>
+</html>

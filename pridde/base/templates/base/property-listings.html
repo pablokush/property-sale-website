@@ -1,0 +1,35 @@
+{% extends "base/admin.html"%}
+
+{% block content %}
+<div class="row" id="property-listings">
+    <h5>Property  Listings</h5>
+    <hr>
+
+    {% for item in properties %}
+        <div class="row">
+            <div class="col">
+                <p>{{item.id}}</p>
+            </div>
+            <div class="col">
+                <img src="{{item.image.url}}" height="100em" width="200em">
+            </div>
+            <div class="col">
+                <p>{{ item.name}}</p>
+            </div>
+            <div class="col">
+                <p>{{ item.location}}</p>
+            </div>
+            <div class="col">
+                <a class="btn btn-success btn-sm " href="#" role="button">Edit </a>
+            </div>
+            <div class="col">
+                <a class="btn btn-danger btn-sm " href="#" role="button">Delete </a>
+            </div>
+        </div>
+        <hr>
+    {%endfor %}
+
+</div>
+
+
+{% endblock%}

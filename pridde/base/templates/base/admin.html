@@ -1,0 +1,192 @@
+{% load static %}
+
+
+
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/
+font-awesome/5.15.2/css/all.min.css"/>
+
+<link rel="stylesheet" href="{% static 'base/styles/admin.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="dash">
+            <p class="title">DashBoard </p>
+            <!-- <a class="btn btn-dark btn-sm " href="{% url 'logout' %}" role="button">Log Out </a> -->
+        </div>
+        
+        <hr>
+        <div class="row">
+            <div class="col-lg-3 col-md-12" id="nav">
+               <div class="row">
+                <p class="menu-title">
+                   Pride Homes
+                   <hr>
+                </p>
+                <a href="{% url 'home' %}">
+                    <p class="menu" >
+                        <i class="fa fa-home" aria-hidden="false"></i>  Home
+                      </p>
+                </a>
+                <hr>
+              </div>
+               <div class="row">
+              
+               <a href="{% url 'add' %}">
+                <p class="menu">
+                    <i class="fa fa-plus-circle" aria-hidden="false"></i> Add property
+                </p>
+               </a>
+               </a>
+                <hr>
+              </div>
+              <div class="row">
+              
+                <a href="{% url 'locations' %}">
+                 <p class="menu">
+                     <i class="fa fa-plus-circle" aria-hidden="false"></i> Locations
+                 </p>
+                </a>
+                </a>
+                 <hr>
+               </div>
+               <div class="row">
+              
+                <a href="{% url 'images' %}">
+                 <p class="menu">
+                     <i class="fa fa-plus-circle" aria-hidden="false"></i> Images
+                 </p>
+                </a>
+                </a>
+                 <hr>
+               </div>
+               <div class="row">
+              
+                <a href="{% url 'company-details' %}">
+                 <p class="menu">
+                     <i class="fa fa-plus-circle" aria-hidden="false"></i> Company Details
+                 </p>
+                </a>
+                </a>
+                 <hr>
+               </div>
+               <div class="row">
+                <a href="">
+                    <p class="menu">
+                        <i class="fa fa-user" aria-hidden="false"></i> Add Client
+                    </p>
+                </a>
+                <hr>
+              </div>
+               <div class="row">
+                {% for item in details%}
+            <a 
+            href="{% url 'edit-company-details' item.id %}"
+            >
+                    <p class="menu">
+                        <i class="fa fa-edit" aria-hidden="false"></i> Edit Company Details
+                    </p>
+                </a>
+                {% endfor %}
+                <hr>
+              </div>
+               <div class="row">
+                <a href="{% url 'owner' %}">
+                    <p class="menu">
+                        <i class="fa fa-phone" aria-hidden="false"></i> Add Owners
+                    </p>
+                </a>
+                <hr>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-12">
+                
+                <hr>
+                <div class="row property-listings">
+                   <div class="col-lg-8 col-sm-12">
+                    <h5>Property  Listings</h5>
+                    <hr>
+                
+                    {% for item in properties %}
+                        <div class="row">
+                            <div class="col-lg-1 col-sm-12">
+                                <p>{{item.id}}</p>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <img src="{{item.image.url}}" height="100em" width="200em">
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <p> {{ item.name}}</p>
+                            </div>
+                           
+                            <div class="col-lg-2 col-sm-12">
+                                <a class="btn btn-success  btn-block" href="{% url 'edit' item.id %}" role="button">Edit </a>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <a class="btn btn-danger   btn-block" href="{% url 'delete-item' item.id %}" role="button">Delete </a>
+                            </div>
+                        </div>
+                        <hr>
+                    {%endfor %}
+                
+                   </div>
+                   <div class="col-lg-4 col-sm-12" >
+                    <div class="row" id="cmp-det">
+                       {% for item in details%}
+                      <div class="row">
+                          <div class="col-8">
+                            <h6>Company Details</h6>
+                            
+                          </div>
+                          <!-- <div class="col-4">
+                              <a href="{% url 'edit-company-details' item.id %}" class="btn btn-outline-warning">Edit</a>
+                          </div> -->
+                          <hr>
+                      </div>
+                       <p>Name: {{item.name}}</p>
+                       <p>Phone1: {{item.phone1}}</p>
+                       <p>Phone2: {{item.phome2}}</p>
+                       <p>Email1: {{item.email1}}</p>
+                       <p>Email2: {{item.email2}}</p>
+                       <p>Address: {{item.address}}</p>
+
+                       {% endfor %}
+                    </div>
+                    <div class="row" id="agents">
+                        <h6>Owners/Company Names</h6>
+                    <hr>
+                    {% for owner in owners%}
+                        <div class="row">
+                            <!-- <div class="col-1">
+                                {{owner.id}}.
+                            </div> -->
+                            <div class="col-10">    
+                                {{owner.companyname}}
+                            </div>
+                        </div>  
+                    {% endfor %}
+
+                    
+                    </div>
+                </div>
+                </div>
+                
+                
+                
+            </div>
+            
+            
+        </div>
+    </div>
+</body>
+</html>
